@@ -25,4 +25,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //佳博打印SDK
+    implementation files('libs/gprintersdkv22.jar')
+    implementation files('libs/jcc-bate-0.7.3.jar')
+    implementation files('libs/ksoap2-android-assembly-2.5.2-jar-with-dependencies.jar')
+    implementation files('libs/xUtils-2.6.14.jar')
 }
