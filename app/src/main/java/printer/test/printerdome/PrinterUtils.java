@@ -33,6 +33,8 @@ public class PrinterUtils {
     private GpService mGpService;
     private PrinterServiceConnection conn = null;
 
+    private PortParameters mPortParam[] = new PortParameters[GpPrintService.MAX_PRINTER_CNT];
+
     public PrinterUtils(Context context) {
         this.context = context;
         DeviceName = getUsbDevices();
@@ -50,17 +52,21 @@ public class PrinterUtils {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             mGpService = GpService.Stub.asInterface(service);
+
+            initUSBDevices();
         }
     }
+
 
     /**
      * 启动打印服务
      */
-    private void connection() {
+    public void connection() {
         conn = new PrinterServiceConnection();
         Log.i(DEBUG_TAG, "connection");
         Intent intent = new Intent(context, GpPrintService.class);
         context.bindService(intent, conn, Context.BIND_AUTO_CREATE); // bindService
+
     }
 
     /**
@@ -97,7 +103,7 @@ public class PrinterUtils {
      * @param dev
      * @return
      */
-    boolean checkUsbDevicePidVid(UsbDevice dev) {
+    private boolean checkUsbDevicePidVid(UsbDevice dev) {
         int pid = dev.getProductId();
         int vid = dev.getVendorId();
         boolean rel = false;
@@ -110,10 +116,10 @@ public class PrinterUtils {
     /**
      * 链接USB打印设备
      */
-    public void initUSBDevices() {
+    private void initUSBDevices() {
         int rel = 0;
         if (TextUtils.isEmpty(DeviceName)) {
-            showToast("请检查打印机设备是否连接");
+            if (DeviceName.equals("noDevices")) showToast("请检查打印机设备是否连接");
             return;
         }
         try {
