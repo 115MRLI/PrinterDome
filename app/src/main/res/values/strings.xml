@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PrinterDome</string>
+    <string name="failed">链接打印机失败请检查打印设备</string>
 </resources>
